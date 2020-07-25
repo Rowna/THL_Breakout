@@ -4,23 +4,23 @@ import break_out.controller.Controller;
 import break_out.view.View;
 
 /**
- * The entry point of the program. The game get started here and all components
- * are initialized here.
+ * Hier beginnt die gesamte App. Das Spiel beginnt hier,
+ * und alle Komponenten werden hier initialisiert.
  * 
- * @author  modified by 
+ * @author 
  * 
  */
 public class Main {
 
 	/**
-	 * The main method
+	 * Die main()-Methode
 	 * 
-	 * @param args The arguments that were passed by the command line.
+	 * @param args Kommandozeilen-Argumente
 	 */
 	public static void main(String[] args) {
-		// Create the view
+		// Das Ansicht-Objekt erzeugen
 		View view = new View();
-		// Create the controller and pass the view object to it
+		// Das Controller-Objekt erzeugen und das Ansicht-Objekt übergeben
 		new Controller(view);
 	}
 }
