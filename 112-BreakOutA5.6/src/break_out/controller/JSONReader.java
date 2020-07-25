@@ -15,38 +15,40 @@ import org.json.simple.parser.ParseException;
 import break_out.Constants;
 
 /**
- * The <code>JSONReader</code> reads the content of an json file.
+ * Der <code>JSONReader</code> liest eine JSON-Datei ein.
  * 
- * @author dmlux, modified by I.Schumacher
+ * @author 
  *
  */
 public class JSONReader {
 
 	/**
-	 * The project path to the JSON file
+	 * Der Pfad der JSON-Datei
 	 */
 	private String path;
 
 	/**
-	 * The stones stored as List<List<Long>>
+	 * Die Steine als List<List<Long>>
 	 */
 	private List<List<Long>> rects = new ArrayList<List<Long>>();
 		
 	/**
-	 * The stones stored as 2D-int-array
+	 * Die Steine als zweidimensionales Array 
+	 * (rml: eckige Steine heißen im Englischen "bricks")
 	 */
 	private int[][] stones = new int[Constants.SQUARES_Y][Constants.SQUARES_X];
 	
 	/**
-	 * The counter with the number of trials that are allowed to break out the stones of the level
+	 * Der Zähler, der anzeigt, wie oft man einen Stein treffen muss, damit er verschwindet.
 	 */
 	private Long lifecount = null;
 	
 	/**
-	 * The constructor needs an path to create the JSONReader
+	 * Der Konstruktor benötigt einen Dateipfad, um den JSONReader
+	 * zu initialisieren.
 	 * 
 	 * @param path
-	 *            The absolute path to the JSON file
+	 *            Der absolute Pfad der JSON-Datei
 	 */
 	public JSONReader(String path) {
 		this.path = path;
@@ -54,22 +56,25 @@ public class JSONReader {
 	}
 
 	/**
-	 * Getter for the stones of the JSON file
+	 * Getter für die Steine, die in der JSON-Datei beschrieben sind.
 	 * 
-	 * @return The List<List<Long>> of stones
+	 * @return eine List<List<Long>> der Steine
 	 */
 	public List<List<Long>> getStonesListOfLists() {
 		return rects;
 	}
 	
 	/**
-	 * Getter for the stones of the JSON file
+	 * Getter für die Steine, die in der JSON-Datei beschrieben sind.
 	 * 
-	 * @return The stones as 2D-Array
+	 * @return Die Steine als zweidimensionales Array.
 	 */
 	public int[][] getStones2DArray() {	
+		//Zeile
 		for (int i = 0; i < rects.size(); i++) {
+			//Spalte
 			for (int j = 0; j < rects.get(i).size(); j++) {
+				// Zelle
 				stones[i][j] = (int)rects.get(i).get(j).longValue();
 			}
 		}
@@ -77,26 +82,28 @@ public class JSONReader {
 	}
 	
 	/**
-	 * Getter for the lifeCounter of the JSON file
+	 * Getter für den lifeCounter, wie in der JSON-Datei festgelegt
 	 * 
-	 * @return The lifeCounter
+	 * @return den lifeCounter
 	 */
 	public int getLifeCounter() {
 		return (int)lifecount.longValue();
 	}
 	
 	/**
-	 * Loader for the both values "fields" and "maxDrops" of the JSON file
+	 * Diese Methode lädt Werte sowohl für "fields" und "maxDrops" aus der JSON-Datei.
 	 * 
 	 */
 	@SuppressWarnings("unchecked")
 	private void loadJsonValues() {
 		JSONParser parser = new JSONParser();
 		try {
+			// 
 			Object obj = parser.parse(new FileReader(path));
 
 			String jsonStr = obj.toString();
 			JSONObject json = (JSONObject) JSONValue.parse(jsonStr);
+			// rects sind die Rechtecke, aus denen das Spielfeld besteht (Die roten Zellen)
 			rects = (List<List<Long>>) json.get("field");
 			lifecount = (Long)json.get("maxLives");
 
