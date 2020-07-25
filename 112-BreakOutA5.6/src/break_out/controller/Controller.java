@@ -11,42 +11,45 @@ import break_out.view.StartScreen;
 import break_out.view.View;
 
 /**
- * The controller takes care of the input events and reacts on those events by
- * manipulating the view and updates the model.
+ * Der Controller kümmert sich um Eingabe-Events und reagiert darauf,
+ * indem er die Ansicht und das Datenmodell auf einen neuen Stand bringt.
  * 
- * @author dmlux, modified by I. Schumacher and I. Traupe modified by Saman Shayanfar, Bashar Alsamar
+ * @author 
  * 
  */
 public class Controller implements ActionListener, KeyListener {
 
 	/**
-	 * The game as model that is connected to this controller
+	 * Das Spiel als Daten-Modell, das mit diesem Controller verknüpft ist
 	 */
 	private Game game;
 
 	/**
-	 * The view that is connected to this controller
+	 * Die Ansicht, die mit diesem Controller verknüpft ist.
 	 */
 	private View view;
 
 	/**
-	 * The constructor expects a view to construct itself.
+	 * Der Konstruktor benötigt eine Ansicht, um sich selbst zu "bauen"
 	 * 
 	 * @param view
-	 *            The view that is connected to this controller
+	 *            Die Ansicht, die mit diesem Controller verbunden ist.
 	 */
 	public Controller(View view) {
 		this.view = view;
 
-		// Assigning the listeners
+		// Die Listener zuweisen
 		assignActionListener();
 		assignKeyListener();
 	}
 
 	/**
-	 * The controller gets all buttons out of the view with this method and adds
-	 * this controller as an action listener. Every time the user pushed a button
-	 * the action listener (this controller) gets an action event.
+	 * Mit Hilfe dieser Methode erhält der Controller alle Buttons, die
+	 * in der Ansicht definiert sind, und macht diesen Controller für sie alle
+	 * zuständig. Jedes Mal, wenn der Benutzer einen Button aus der Ansicht
+	 * anklickt, reagiert sein ActionListener (also dieser Controller) mit
+	 * einem ActionEvent.  
+	 * 
 	 */
 	private void assignActionListener() {
 		// Get the start screen to add this controller as action
@@ -56,8 +59,10 @@ public class Controller implements ActionListener, KeyListener {
 	}
 
 	/**
-	 * With this method the controller adds himself as a KeyListener. Every time the
-	 * user pushed a key the KeyListener (this controller) gets an KeyEvent.
+	 * Mit Hilfe dieser Methode macht sich der Controller zuständig als KeyListener.
+	 * Jedes Mall, wenn der Benutzer eine Taste drückt, wertet der KeyListener
+	 * (also dieser Controller) diesen KeyEvent aus.
+	 * 
 	 */
 	private void assignKeyListener() {
 		// Get the field to add this controller as KeyListener
@@ -65,42 +70,48 @@ public class Controller implements ActionListener, KeyListener {
 	}
 
 	/**
-	 * If the user clicks any button this ActionListener will get called. The method
-	 * will get an ActionEvent e which held the source of this event.
+	 * Sobald der Benutzer irgendeinen Button klickt, wird dieser ActionListener aktiv.
+	 * Die Methode bekommt einen ActionEvent 'e' übergeben, den sie dann als Event-Quelle
+	 * auswertet.
+	 * 
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// We will get the startScreen view from the view
+		// Hiermit bekommen wir die StartScreen
 		StartScreen startScreen = view.getStartScreen();
 
-		// The startScreen view has some buttons. We will compare the source of the
-		// event e with the startButton to get sure that this button was the event
-		// source ... or simple: The user clicked this particular button.
+		// Die StartScreen-Ansicht hat ein paar Buttons. Wir vergleichen die 
+		// Event-Quelle 'e' mit dem StartButton, um sicher zu sein, dass
+		// tatsächlich diser Button die Event-Quelle war.
+		// Oder einfach gesagt: Dass der Benutzer tatsächlich den StartButton
+		// geklickt hat.
+		
 		if (startScreen.getStartButton().equals(e.getSource())) {
-			// The players name of the input field in the start window
+			// Der Name des Spielers im Eingabefeld des Startfensters
 			String playersName = startScreen.getPlayersName();
 			playersName = playersName.trim();
 			if (playersName.length() < 1) {
-				// If the players name is too short, we won't accept this and display an error
-				// message
-				startScreen.showError("Der Name ist ungÃ¼ltig");
+				// Wenn der Benutzername zu kurz ist, werden wir das nicht akzeptieren
+				// und eine Fehlermeldung ausgeben.
+				startScreen.showError("Der Name ist ungueltig. Versuchen Sie es nochmal!");
 			} else {
-				// If everything is fine we can go on and create a new game.
+				// Wenn alles OK ist, können wir ein neues Spiel starten ... 
 				game = new Game(this);
-				// ... and tell the view to set this new game object.
+				// ... und der Ansicht diese neue Spiel-Instanz übergeben.
 				view.setGame(game);
 			}
 		}
-
-		// If the eventSource was the quit button we will exit the whole application.
+		// Wenn die Event-Quelle der "Quit"-Button war, beenden wir die komplette App.
 		else if (startScreen.getQuitButton().equals(e.getSource())) {
 			System.exit(0);
 		}
 	}
 
 	/**
-	 * This method will be called, after a key was typed. This means, that the key
-	 * was pressed and released, before this method get called.
+	 * Diese Methode wird aufgerufen, nachdem eine Taste gedrückt wurde. Das heißt,
+	 * dass die Taste heruntergedrückt und wieder losgelassen wurde; vorher kommt
+	 * der Event nicht bei dieser Methode an.
+	 * 
 	 */
 	@Override
 	public void keyTyped(KeyEvent e) {
@@ -108,20 +119,22 @@ public class Controller implements ActionListener, KeyListener {
 	}
 
 	/**
-	 * This method will be called, after a key was pressed down.
-	 * @param e The key event
+	 * Diese Methode wird aufgerufen, nachdem die taste gedrückt (aber noch nicht
+	 * losgelassen) wurde.
+	 * 
+	 * @param e Das Ereignisobjekt
 	 */
 	@Override
 	public void keyPressed(KeyEvent e) {
-    	// betaetigen der Leertaste
+    	// Es war die Leertaste ...
     	if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-    		// Zustand des Balls pruefen. Der Ball bewegt sich
+    		// Zustand des Balls pruefen. Wenn der Ball sich bewegt ...
     		if (game.getLevel().ballWasStarted()) {
-    			// dann Ball anhalten
+    			// ... Ball anhalten
     			game.getLevel().stopBall();
     		}
     		else {
-    			// sonst Ball starten
+    			// ... andernfalls: Ball weiterlaufen lassen.
     			game.getLevel().startBall();
     		}
     	}
@@ -141,7 +154,7 @@ public class Controller implements ActionListener, KeyListener {
     	
     	// betaetigen der ESC-Taste
     	if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-    		// Spiel beenden auf wahr setzen
+    		// "Spiel beendet" auf "wahr" setzen
     		game.getLevel().setFinished(true);
     		// Startbildschirm aufrufen
     		toStartScreen();   		
@@ -150,12 +163,14 @@ public class Controller implements ActionListener, KeyListener {
 	}
 
 	/**
-	 * This method will be called, after a key was released.
-	 * @param e The key event
+	 * Diese Methode wird aufgerufen, wenn eine Taste gedrückt ist
+	 * und wieder losgelassen wird.
+
+	 * @param e Das Ereignis-Objekt
 	 */
 	@Override
 	public void keyReleased(KeyEvent e) {
-    	// beim loslassen der Pfeiltasten soll sich das Paddle nicht mehr bewegen
+    	// beim Loslassen der Pfeiltasten soll sich das Paddle nicht mehr bewegen
     	// linke Pfeiltaste
     	if (e.getKeyCode() == KeyEvent.VK_LEFT) { 
     		game.getLevel().getPaddle().setDirection(0);
@@ -168,7 +183,7 @@ public class Controller implements ActionListener, KeyListener {
 	}
 
 	/**
-	 * This method switches the view to the StartScreen view.
+	 * Diese Methode schaltet um auf den Start Screen.
 	 */
 	public void toStartScreen() {
 		view.showScreen(StartScreen.class.getName());
@@ -176,8 +191,8 @@ public class Controller implements ActionListener, KeyListener {
 	}
 
 	/**
-	 * This method switches the view to the FieldView which will display the
-	 * playground.
+	 * Diese Methode schaltet um auf den Field View
+	 * (der das Spielfeld anzeigt)
 	 */
 	public void toPlayground() {
 		view.showScreen(Field.class.getName());
