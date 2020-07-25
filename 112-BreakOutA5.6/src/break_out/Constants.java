@@ -3,7 +3,7 @@ package break_out;
 import java.awt.Color;
 
 /**
- * A class that contains all constant values to configure the game
+ * Eine Klasse, die alle Konstanten enthält, die das Spiel konfigurieren
  * 
  * @author 
  * 
@@ -11,67 +11,68 @@ import java.awt.Color;
 public class Constants {
 
     /**
-     * The screen width in pixels
+     * Die Anzeigebreite in Pixeln
      */
     public static final Double SCREEN_WIDTH = 800.0;
     
     /**
-     * The screen height in pixels
+     * Die Anzeigehöhe in Pixeln
      */
     public static final Double SCREEN_HEIGHT = 625.0;
     
     /**
-     * the application name
+     * Der App-Name
      */
-    public static final String APP_TITLE = "iBreakOut";
+    public static final String APP_TITLE = "BreakOut Game";
 
     /**
-     * Debugging flag for special rendering hints
+     * Debug-Schalter für besondere Render-Hinweise
      */
     public static final boolean DEBUG_MODE = false;
 
     /**
-     * The background color for the game menu
+     * Die Hintergrundfarbe für das Menue
      */
     public static final Color BACKGROUND = new Color(52, 152, 219);
 
     /**
-     * Amount of columns for blocks
+     * Wie viele Spalten hat ein Block?
      */
     public static final Integer SQUARES_X = 20;
 
     /**
-     * Amount of the rows
+     * Wie viele Zeilen soll es geben?
      */
     public static final Integer SQUARES_Y = 25;
     
     /**
-     * The paddle width in pixels
+     * Wie breit soll das Paddel sein (in Pixeln)
+     * => ändert sich mit der Schwierigkeit des Spiels.
      */
     public static final Double PADDLE_WIDTH = 70.0;
     
     /**
-     * The paddle height in pixels
+     * Wie hoch soll das Paddel sein? (in Pixeln)
      */
     public static final Double PADDLE_HEIGHT = 15.0;
     
     /**
-     * The distance between paddle and the lower reflection offset.
+     * Der Abstand zwischen Paddel und dem unteren Reflection Offset
      */
     public static final Double REFLECTION_OFFSET = 25.0;
     
     /**
-     * The ball diameter in pixels
+     * Der Durchmesser des Balls in Pixels
      */
     public static final Double BALL_DIAMETER = 15.0;
        
     /**
-     * The paddle speed
+     * Wie schnell bewegt sich das Paddel?
      */
     public static final Double DX_MOVEMENT = 4.5;
     
     /**
-     * The ball speed
+     * Wie schnell bewegt sich der Ball?
      */
     public static final Double BALL_SPEED = 1.20;
     
