@@ -8,8 +8,9 @@ import break_out.Constants;
 import break_out.model.Game;
 
 /**
- * The view class manages the depiction of the components inside the JFrames. It
- * gets the components from the game which is connected to this class
+ * Die Klasse "View" bringt die Komponenten innerhalb der JFrames "auf den 
+ * Schirm". Dabei holt sich der View die Komponenten aus dem Game-Objekt, 
+ * das mit dieser Klasse verbunden ist.
  * 
  * @author 
  * 
@@ -17,56 +18,56 @@ import break_out.model.Game;
 public class View extends JFrame  {
 
 	/**
-	 * Automatic generated serial version UID
+	 * automatisch generierte ID für die Seriennummer
 	 */
 	private static final long serialVersionUID = -1850986636132660133L;
 
 	/**
-	 * The layout
+	 * Das Layout
 	 */
 	private CardLayout cardLayout;
 
 	/**
-	 * The connected game
+	 * Das Game-Objekt, das angezeigt wird
 	 */
 	private Game game;
 
 	/**
-	 * The start screen of this application
+	 * Der Startbildschirm für diese App
 	 */
 	private StartScreen startScreen;
 
 	/**
-	 * The playground
+	 * Das Spielfeld
 	 */
 	private Field field;
 
 	
 	/**
-	 * The constructor of the view
+	 * Konstruktor
 	 */
 	public View() {
-		// Constructor of the Class Constants
+		// Konstruktor für die Konstanten, die diese Klasse verwendet
 		super(Constants.APP_TITLE);
 
-		// sets the default close operation
+		// Standard-Operation beim Schließen des Views
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //DISPOSE_ON_CLOSE);
 
-		// adds a layout to the view
+		// Welches Layout verwendet dieser View?
 		cardLayout = new CardLayout();
 		getContentPane().setLayout(cardLayout);
 
-		// adding screens to the view
+		// Verschiedene "Panels" für den View erstellen
 		startScreen = new StartScreen(this);
 		field = new Field(this);
 
 		getContentPane().add(startScreen, StartScreen.class.getName());
 		getContentPane().add(field, Field.class.getName());
 
-		// show start screen first
+		// den Startbildschirm anzeigen
 		cardLayout.show(getContentPane(), StartScreen.class.getName());
 
-		// set the start position of the frame
+		// Einstellungen für den View vornehmen
 		setLocationRelativeTo(null);
 		setResizable(false);
 		setVisible(true);
@@ -74,7 +75,7 @@ public class View extends JFrame  {
 	}
 
 	/**
-	 * Getter for the start screen
+	 * Getter für den Startbildschirm
 	 * @return startScreen
 	 */
 	public StartScreen getStartScreen() {
@@ -82,7 +83,7 @@ public class View extends JFrame  {
 	}
 
 	/**
-	 * Getter for the playground
+	 * Getter für das Spielfeld
 	 * @return field
 	 */
 	public Field getField() {
@@ -90,7 +91,7 @@ public class View extends JFrame  {
 	}
 
 	/**
-	 * Getter for the game
+	 * Getter für das Game-Objekt
 	 * @return game
 	 */
 	public Game getGame() {
@@ -98,17 +99,19 @@ public class View extends JFrame  {
 	}
 	
 	/**
-	 * Setter for the game
+	 * Setter für das Game-Objekt
 	 * @param game The current game
 	 */
 	public void setGame(Game game) {
-		// set the game as model
+		// stell das Spiel als model
 		this.game = game;
 		game.addObserver(this);
 	}
 	
 	/**
-	 * Shows a given screen if the card layout contains this screen
+	 * Zeigt einen angeforderten Bildschirm an, falls er auf dem
+	 * Card-Layout vorhanden ist
+	 * 
 	 * @param screenName The screen to be shown
 	 */
 	public void showScreen(String screenName) {
@@ -116,13 +119,22 @@ public class View extends JFrame  {
 	}
 
 	/**
-	 * Called by game.notifyObservers() in the run()-method of Level class
-	 * to repaint the playground
-	 * @param game The game to observe
+	 * Diese Methode wird nur von game.notifyObservers() in der
+	 * run()-Methode innerhalb des Levels aufgerufen,
+	 * um das Spielfeld visuell neu aufzubauen. 
+	 * 
+	 * Hintergrund: Im Spiel kommt es ständig zu Eregnissen: Steine werden getroffen, 
+	 * der Ball geht verloren usw.
+	 * Der View muss auf diese Ereignisse reagieren und das Spielfeld neu aufbauen
+	 * -- je nachdem, welches Ereignis ihn aus dem Spiel erreicht,
+	 * und die Verbindung von Spielereignis und View, das ist diese Methode!
+	 * 
+	 * @param game Das Game-Objekt, auf dessen 'notify-Ereignisse' reagiert werden soll
 	 */
 	public void modelChanged(Game game) {
 		this.game = game;
-		// Calls the method paintComponents() in the Field class
+		
+		// ruft die Methode paintComponents() im "Field"-Objekt auf.
 		field.repaint();
 	}
 }
