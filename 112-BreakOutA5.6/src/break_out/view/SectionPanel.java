@@ -11,7 +11,7 @@ import java.awt.RenderingHints;
 import javax.swing.JPanel;
 
 /**
- * This panel represents the background for special divisions in this application
+ * Dieses Panel dient als Hintergrund für besondere Teilbereiche in dieser App
  * 
  * @author 
  * 
@@ -19,72 +19,72 @@ import javax.swing.JPanel;
 public class SectionPanel extends JPanel {
 
     /**
-     * Automatic generated serial version UID
+     * automatisch generierte serial version UID
      */
     private static final long serialVersionUID = -7773487090869704154L;
 
     /**
-     * Color of the panel
+     * Farbe des Panels
      */
     private Color color;
 
     /**
-     * Thickness of the border
+     * Randbreite
      */
     protected int strokeSize = 1;
 
     /**
-     * Color of the shadow
+     * Shadow-Farbe
      */
     protected Color shadowColor = new Color(50, 50, 50);
 
     /**
-     * Shadow flag
+     * Shadow-Schalter
      */
     protected boolean shady = true;
 
     /**
-     * Double value for the vertical curvature
+     * Wert für vertikale Rundung
      */
     protected Dimension arcs = new Dimension(10, 10);
 
     /**
-     * Distance of shadow to the panel border
+     * Abstand Panel <-> Rahmen
      */
     protected int shadowGap = 3;
 
     /**
-     * Shadow offset
+     * Offset für den Shadow
      */
     protected int shadowOffset = 3;
 
     /**
-     * Shadow transparency 
+     * Alpha-Wert für den Shadow (durchsichtig oder nicht?) 
      */
     protected int shadowAlpha = 200;
 
     
     /**
-     * A constructor for the section panel
+     * Konstruktor
      */
     public SectionPanel() {
         super();
         setOpaque(false);
 
-        // set background color
+        // Standard-Farbe des Hintergrunds
         this.color = new Color(220, 220, 220);
     }
 
     /**
-     * A constructor that expects a background color for this panel
+     * Ein Konstruktor, mit dem man die Hintergrundfarbe selbst auswählen kann
      * 
-     * @param background The background color
+     * @param background Die gewählte Hintergrundfarbe
      */
     public SectionPanel(Color background) {
         super();
         setOpaque(false);
 
-        // set background
+        // Hintergrund einstellen
         this.color = background;
     }
 
@@ -107,11 +107,11 @@ public class SectionPanel extends JPanel {
                 shadowColor.getGreen(), shadowColor.getBlue(), shadowAlpha);
         Graphics2D g2 = (Graphics2D) g;
 
-        // Sets antialiasing
+        // Anti-Aliasing einstellen
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
 
-        // Draws shadow borders if any.
+        // Shadow anzeigen, falls vorhanden
         if (shady) {
             g2.setColor(shadowColorA);
             g2.fillRoundRect(shadowOffset, // X position
@@ -122,7 +122,7 @@ public class SectionPanel extends JPanel {
         } else
             shadowGap = 1;
 
-        // Draws the rounded opaque panel with borders.
+        // Erzeugt ein rundes, durchsichtiges Panel mit Rändern
         Color c1 = color;
         int nr = (color.getRed() + 40) > 255 ? 255 : (color.getRed() + 40);
         int ng = (color.getGreen() + 40) > 255 ? 255 : (color.getGreen() + 40);
@@ -139,7 +139,7 @@ public class SectionPanel extends JPanel {
         g2.drawRoundRect(0, 0, width - shadowGap, height - shadowGap,
                 arcs.width, arcs.height);
 
-        // Sets strokes to default, is better.
+        // Setzt das Aussehen des Rands auf den Standardwert (ist besser)
         g2.setStroke(new BasicStroke());
     }
 }
