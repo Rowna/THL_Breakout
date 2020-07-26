@@ -14,33 +14,31 @@ import break_out.Constants;
 import net.miginfocom.swing.MigLayout;
 
 /**
- * The field represents the board of the game. All components are on the board
- * 
+ *  Der Spiel-Hintergrund. Alle Komponenten befinden sich auf diesem Hintergrund
+ *  
  * @author  
- * 
- * 
  */
 public class Field extends JPanel {
 
 	/**
-	 * Automatic generated serial version UID
+	 * automatisch generierte serial version UID
 	 */
 	private static final long serialVersionUID = 2434478741721823327L;
 
 	/**
-	 * The connected view object
+	 * Das View-Objekt, das mit diesem Hintergrund verknüpft ist.
 	 */
 	private View view;
 
 	/**
-	 * The background color
+	 * Die Hintergrundfarbe
 	 */
 	private Color background;
 
 	/**
-	 * The constructor needs a view
+	 * Der Konstruktor
 	 * 
-	 * @param view The view of this board
+	 * @param view Das View-Objekt, das mit dem Field-Objekt verknüpft werden soll
 	 */
 	public Field(View view) {
 		super();
@@ -50,7 +48,7 @@ public class Field extends JPanel {
 
 		setFocusable(true);
 
-		// Load settings
+		// Einstellungen initialisieren
 		initialize();
 	}
 
@@ -58,13 +56,14 @@ public class Field extends JPanel {
 	 * Initializes the settings for the board
 	 */
 	private void initialize() {
-		// creates a layout
+		// erzeugt ein Layout
 		setLayout(new MigLayout("", "0[grow, fill]0", "0[grow, fill]0"));
 	}
 
 	/**
-	 * Change the background color
-	 * @param color The new color
+	 * ändert die Hintergrundfarbe
+	 * 
+	 * @param color die neue Hintergrundfarbe
 	 */
 	public void changeBackground(Color color) {
 		background = color;
@@ -72,8 +71,9 @@ public class Field extends JPanel {
 	}
 	
 	/**
-	 * This method is called when painting/repainting the playground
-	 * @param g the graphics object
+	 * baut das Spielfeld neu auf 
+	 * 
+	 * @param g Das Graphics-Object
 	 */
 	@Override
 	protected void paintComponent(Graphics g) {
@@ -82,7 +82,7 @@ public class Field extends JPanel {
 		double w = Constants.SCREEN_WIDTH;
 		double h = Constants.SCREEN_HEIGHT;
 
-		// Setting the dimensions of the playground
+		// Die Abmessungen des Spielfelds festlegen
 		setPreferredSize(new Dimension((int) w, (int) h));
 		setMaximumSize(new Dimension((int) w, (int) h));
 		setMinimumSize(new Dimension((int) w, (int) h));
@@ -91,14 +91,14 @@ public class Field extends JPanel {
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
 
-		// Setting the background color
+		// Hintergrundfarbe festlegen
 		g2.setColor(background);
 		g2.fillRect(0, 0, getWidth(), getHeight());
 		
-		// Setting the color for the following components
+		// die Farbe für die folgenden Komponenten festlegen
 		g2.setColor(new Color(200, 200, 200));
 		
-		// Calls the method for drawing the ball
+		// Ruft die Methode zum Erstellen des Balls auf
 		drawBall(g2);
 		
 		// Ruft die Methode zum Zeichnen des Paddles auf
@@ -119,8 +119,9 @@ public class Field extends JPanel {
 	}
 
 	/**
-	 * Draws the ball
-	 * @param g2 The graphics object
+	 * Erzeugt den Ball
+	 * 
+	 * @param g2 Das Graphics2D-Objekt, das als Grundlage dient
 	 */
 	private void drawBall(Graphics2D g2) {
 		g2.fillOval((int) view.getGame().getLevel().getBall().getPosition().getX(),
@@ -130,11 +131,12 @@ public class Field extends JPanel {
 	}
 	
 	/**
-	 * Zeichnt den Paddle
-	 * Greift dabei auf das ihm bekannte view-Objekt auf das zugehoerige Game-Objekt und
-	 * darueber auf das Level-Objekt, danach auf das Paddle-Objekt und im Anschluss
-	 * auf das Positions-Objekt zu, um dortige Methode (lesen der Koordinate) zu nutzen 
-	 * @param g2 Das Grafikobjekt
+	 * Erzeugt das Paddle
+	 * Greift dabei zurück auf das ihm bekannte view-Objekt auf das zugehoerige Game-Objekt und
+	 * darueber auf das Level-Objekt, danach auf das Paddle-Objekt und im Anschluss darauf
+	 * auf das Positions-Objekt, um um dort die Methode zum Lesen der Koordinate zu nutzen
+	 *  
+	 * @param g2 Das Graphics2D-Objekt, das als Grundlage dient
 	 */
 	private void drawPaddle(Graphics2D g2) {
 		g2.fillRoundRect((int) view.getGame().getLevel().getPaddle().getPosition().getX(),
@@ -145,8 +147,9 @@ public class Field extends JPanel {
 	}
 	
 	/**
-	 * Zeichnet den Raster des Spielfeldes
-	 * @param g2 Das Grafikobjekt
+	 * Zeichnet das Raster des Spielfeldes
+	 * 
+	 * @param g2 Das Graphics2D-Objekt, das als Grundlage dient
 	 */
 	private void drawGrid(Graphics2D g2) {
 		// Horizontale linien des Rasters
@@ -164,8 +167,9 @@ public class Field extends JPanel {
 	
 	
 	/**
-	 * Zeichnet die einzelnen Steine in einer Steinmatrix
-	 * @param g2 Variable fuer Grafik 2D Objekt
+	 * Erzeugt die einzelnen Steine in einer Stein-Matrix
+	 * 
+	 * @param g2 Das Graphics2D-Objekt, das als Grundlage dient
 	 */
 	private void drawStones(Graphics2D g2) {
 		
@@ -175,16 +179,16 @@ public class Field extends JPanel {
 		// Hoehe eines Steins
 		double blockHoehe = Constants.SCREEN_HEIGHT / Constants.SQUARES_Y;
 		
-		// Zugriff auf das Steinobjekt in der Level Klasse
+		// Zugriff auf das Stone-Objekt im Level-Objekt
 		Stone [][] s2D = view.getGame().getLevel().getStones();
 		
-		// Zeile der Steinmatrix
+		// Zeile der Stein-Matrix
 		for (int zeile = 0; zeile < s2D.length; zeile++) {
 			
-			// Spalte der Steinmatrix
+			// Spalte der Stein-Matrix
 			for (int spalte = 0; spalte < s2D[zeile].length; spalte++) {
 				
-				// pruefen ob das Steinmatrix nicht leer ist
+				// pruefen ob die Stein-Matrix nicht leer ist
 				if (s2D[zeile][spalte].getType() != 0) {
 					
 					// Farbe des Steins ermitteln
@@ -200,34 +204,34 @@ public class Field extends JPanel {
 	
 	/**
 	 * Anzeigen des Punktestandes auf dem Spielfeld
-	 * @param g2 Variable fuer Grafik 2D objekt
+	 * @param g2 Das Graphics2D-Objekt, das als Grundlage dient
 	 */
 	private void drawScore(Graphics2D g2) {
 		
-		// Farbe der Anzeige Schwarz
+		// Farbe der Anzeige: Schwarz
 		g2.setColor(new Color(0, 0, 0));
 		
 		// Schriftart
 		g2.setFont(new Font("Arial", Font.BOLD,20));
 		
-		// aktueller Scorewert anzeigen
-		String scoreText = "Score: " + view.getGame().getLevel().getScore();
+		// aktuellen Punktestand anzeigen
+		String scoreText = "Spielstand: " + view.getGame().getLevel().getScore();
 		g2.drawString(scoreText, 5, 20);
 	}
 	
 	/**
-	 * Anzeigen der leben auf dem Spielfeld
-	 * @param g2 Variable fuer Grafik 2D objekt
+	 * Anzeigen der Leben auf dem Spielfeld
+	 * @param g2 Das Graphics2D-Objekt, das als Grundlage dient
 	 */
 	private void drawLives(Graphics2D g2) {
 		
-		// Farbe der Anzeige Schwarz
+		// Farbe der Anzeige: Schwarz
 		g2.setColor(new Color(0, 0, 0));
 		
 		// Schriftart
 		g2.setFont(new Font("Arial", Font.BOLD,20));
 		
-		// aktueller leben anzeigen
+		// aktuelle Anzahl der Leben anzeigen
 		String liveText = "Life : " + view.getGame().getLevel().getLifeCnt();
 		g2.drawString(liveText, 5, 45);
 	}
