@@ -15,7 +15,7 @@ import break_out.Constants;
 import net.miginfocom.swing.MigLayout;
 
 /**
- * This screen serves the configuration of the game.
+ * Dieser Bildschirm setzt die Einstellungen des Spieles um.
  * 
  * @author 
  * 
@@ -23,40 +23,44 @@ import net.miginfocom.swing.MigLayout;
 public class StartScreen extends JPanel {
 
 	/**
-	 * Automatic generated serial version UID
+	 * automatisch generierte serial version UID
 	 */
 	private static final long serialVersionUID = -131505828069382345L;
 
 	/**
-	 * Start game button
+	 * Der Game-Starten-Button
 	 */
 	private JButton startGame;
 
 	/**
-	 * The connected view object
+	 * Das View-Objekt, mit dem das Game-Objekt verbunden ist
 	 */
 	private View view;
 
 	/**
-	 * Quit game button
+	 * Der "Beenden"-Button
 	 */
 	private JButton quitGame;
-
 	/**
-	 * Input field for the players name
+	 * Der "Schwierigkeit"-Button
+	 */
+	private JButton modiGame;
+	
+	/**
+	 * Eingabefeld für den Spielernamen
 	 */
 	private JTextField playersName;
 
 	/**
-	 * The error label
+	 * Das Label für Fehlermeldungen
 	 */
 	private JLabel error;
 
 	
 	/**
-	 * The constructor needs a view
+	 * Der Konstruktor braucht ein View-Objekt. 
 	 * 
-	 * @param view The view of this board
+	 * @param view Das View-Objekt, das den Startbildschirm anzeigen soll
 	 */
 	public StartScreen(View view) {
 		super();
@@ -73,7 +77,7 @@ public class StartScreen extends JPanel {
 
 	
 	/**
-	 * Initializes the settings for this screen
+	 * initialisiert die Einstellungen für den Start-Bildschirm
 	 */
 	private void initialize() {
 		// layout
@@ -81,16 +85,16 @@ public class StartScreen extends JPanel {
 				"10[35%, center, grow, fill][65%, center, grow, fill]10",
 				"10[center, grow, fill]10"));
 
-		// background color
+		// Hintergrundfarbe
 		setBackground(Constants.BACKGROUND);
 
-		// initializes menu
+		// Menüs initialisieren
 		initializeLeftMenu();
 		initializeScoreMenu();
 	}
 
 	/**
-	 * Initializes the left menu
+	 * initialisiert das Menü auf der linken Seite
 	 */
 	private void initializeLeftMenu() {
 		// the layout
@@ -99,16 +103,18 @@ public class StartScreen extends JPanel {
 		leftMenu.setLayout(new MigLayout("", "10[center, grow, fill]10",
 				"10[center]30[center]5[center]20[center]5[center]0"));
 
-		// adding components to the layout
+		// Komponenten dem Layout hinzufügen
 		startGame = new JButton("Spiel starten");
 		quitGame = new JButton("Spiel beenden");
+		modiGame = new JButton("Schwierigkeit");
+		
 		playersName = new JTextField();
 
 		error = new JLabel("");
 		error.setForeground(new Color(204, 0, 0));
 		error.setHorizontalAlignment(SwingConstants.CENTER);
-
-		JLabel menuLabel = new JLabel(Constants.APP_TITLE + " SpielmenÃ¼");
+		// Spiel Titel
+		JLabel menuLabel = new JLabel(Constants.APP_TITLE + getPlayersName());
 		menuLabel.setFont(new Font("Sans-serif", Font.PLAIN, 16));
 		menuLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
@@ -117,21 +123,22 @@ public class StartScreen extends JPanel {
 		leftMenu.add(playersName, "cell 0 2, growx");
 		leftMenu.add(startGame, "cell 0 3, growx");
 		leftMenu.add(quitGame, "cell 0 4, growx");
+		leftMenu.add(modiGame, "cell 0 6, growx");
 		leftMenu.add(error, "cell 0 5, growx");
 		add(leftMenu, "cell 0 0");
 	}
 
 	/**
-	 * Initializes the right menu
+	 * initialisiert das Menü auf der rechten Seite
 	 */
 	private void initializeScoreMenu() {
-		// The layout
+		// Layout
 		SectionPanel scoreMenu = new SectionPanel(Color.WHITE);
 		scoreMenu.shady = false;
 		scoreMenu.setLayout(new MigLayout("", "10[center, grow, fill]10",
 				"5[center]5"));
 
-		// adding the components to the layout
+		// die Komponenten dem Layout hinzufügen
 		JLabel headline = new JLabel("Scores");
 		headline.setFont(new Font("Sans-serif", Font.PLAIN, 16));
 		headline.setHorizontalAlignment(SwingConstants.CENTER);
@@ -141,55 +148,60 @@ public class StartScreen extends JPanel {
 	}
 
 	/**
-	 * Adds an action listener to the start button
-	 * @param l The actionListener
+	 * setzt einen Action-Listener auf diesen Knopf an
+	 * 
+	 * @param l der Action-Listener
 	 */
 	public void addActionListenerToStartButton(ActionListener l) {
 		startGame.addActionListener(l);
 	}
 
 	/**
-	 * Returns the start button
-	 * @return startGame The button for starting the game
+	 * Getter für den Start-Button
+	 * 
+	 * @return startGame Der Button, mit dem man das Spiel startet
 	 */
 	public JButton getStartButton() {
 		return startGame;
 	}
 
 	/**
-	 * Adds an action listener to the quit button
-	 * @param l The actionListener
+	 * Setzt einen Action-Listener auf den "Beenden"-Button an
+	 * @param l Der Action-Listener
 	 */
 	public void addActionListenerToQuitButton(ActionListener l) {
 		quitGame.addActionListener(l);
 	}
 
 	/**
-	 * Returns the quit button
-	 * @return quitGame The button for ending the game
+	 * Getter für den "Beenden"-Button
+	 * 
+	 * @return quitGame Der Button, mit dem man das Spiel beendet.
 	 */
 	public JButton getQuitButton() {
 		return quitGame;
 	}
 
 	/**
-	 * Returns the players name
-	 * @return The name of the player in the JTextField playersName
+	 * Getter für den Spielernamen
+	 * 
+	 * @return Der Name des Spieler, der im entsprechenden Feld steht
 	 */
 	public String getPlayersName() {
 		return playersName.getText();
 	}
 
 	/**
-	 * Shows an error in the menu
-	 * @param message The String to be shown
+	 * Zeigt im Menü eine Fehlermeldung an
+	 * 
+	 * @param message Die Fehlermeldung, die angezeigt werden soll
 	 */
 	public void showError(String message) {
 		error.setText(message);
 	}
 
 	/**
-	 * Removes error message from the screen
+	 * Entfernt Fehlermeldungen vom Bildschirm
 	 */
 	public void hideError() {
 		error.setText("");
