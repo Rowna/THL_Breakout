@@ -2,28 +2,29 @@ package break_out.model;
 
 
 /**
- * This class represents a position within the board in pixel coordinates
  * 
- * @author dmlux
+ * Diese Klasse beinhaltet eine Position auf dem Spielfeld in Pixeln 
+ *
+ * @author
  * 
  */
 public class Position {
 
 	/**
-	 * X coordinate
+	 * X-Position
 	 */
 	private double x;
 
 	/**
-	 * Y coordinate
+	 * Y-Position
 	 */
 	private double y;
 	
 	/**
-	 * The constructor needs a x and y coordinate to be called
+	 * Konstruktor
 	 * 
-	 * @param x The x position of the object on the board
-	 * @param y The y position of the object on the board
+	 * @param x Die X-Position des betreffenden Objekts
+	 * @param y Die Y-Position des betreffenden Objekts
 	 */
 	public Position(double x, double y) {
 		this.x = x;
@@ -31,34 +32,34 @@ public class Position {
 	}
 
 	/**
-	 * Getter for the x-coordinate
+	 * Getter für die X-Position
 	 * 
-	 * @return x The x value of this position
+	 * @return x Der aktuelle X-Wert
 	 */
 	public double getX() {
 		return x;
 	}
 
 	/**
-	 * Setter for the x-coordinate
-	 * @param x The new x-coordinate
+	 * Setter für die X-Position
+	 * @param x die neue X-Position
 	 */
 	public void setX(double x) {
 		this.x = x;
 	}
 
 	/**
-	 * Getter for y-coordinate
+	 * Getter für die Y-Position
 	 * 
-	 * @return y The y value of the position
+	 * @return y Der aktuelle Y-Wert
 	 */
 	public double getY() {
 		return y;
 	}
 
 	/**
-	 * Setter for the y-coordinate
-	 * @param y The new y-coordinate
+	 * Setter für die Y-Position
+	 * @param y die neue Y-Position
 	 */
 	public void setY(double y) {
 		this.y = y;
