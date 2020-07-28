@@ -2,52 +2,49 @@ package break_out.model;
 import java.awt.Color;
 
 /**
- * Diese Klasse enthaelt Informationen zu Eigenschaften der Steine
- * 
- * 
- * 
- * @author Gruppe 112 : Saman Shayanfar, Bashar Alsamar
+ * Diese Klasse enthaelt Daten fuer die Eigenschaften der Steine
+ *
+ * @author 
  */
-
 
 public class Stone {
 	
 	/**
-	 * Objektvariable Typ (Haltbarkeit) eines Steins
+	 * Typ (= Robustheit) eines Steins
 	 */
 	private int type;
 	
-	
 	/**
-	 * Objektvariable, wert zum Score ermitteln
+	 * aktueller "Zustand" des Steins
 	 */
 	private int value;
 	
 	
 	/**
-	 * Objektvariable, Farbe eines Steins
+	 * Farbe des Steins
 	 */
 	private Color color;
 	
 	/**
-	 * Objektvariable pos, Position eines Steins
+	 * Position des Steins
 	 */
 	private Position pos;
 	
 	
 	
 	/**
-	 * Konstruktor mit Position des Steins und typ des Steins
+	 * Konstruktor. Initialisiert den Stein.
 	 * 
-	 * @param type Typ der steine auf dem spielfeld
-	 * @param position Position der steine auf dem spielfeld
+	 * @param type Typ des Steins auf dem spielfeld
+	 * @param position Position des Steins auf dem Spielfeld
 	 */
 	public Stone (int type, Position position) {
 		
 		this.type = type;
 		this.pos = position;
 		
-		// Switch-case Bedingung, zeigt farbe der steine in abhaengigkeit von typ und score werte der steine (auch abhaengig)
+		// Switch-case: Legt die Farbe des Steins fest,
+		//    abhaengig von Typ und aktuellem Zustand des Steins (auch abhaengig)
 		switch (type) {
 		
 		case 0:
@@ -76,24 +73,25 @@ public class Stone {
 	
 	
 	/**
-	 * setter fuer den score wert
-	 * @param value Der neue Score wert
+	 * Setter fuer den Zustandswert
+	 * 
+	 * * @param value der neue Zustandswert
 	 */
 	public void setValue (int value) {
 		this.value = value;
 	}
 	
 	/**
-	 * getter fuer den score wert
-	 * @return value aktueller score wert
+	 * Getter fuer den Zustandswert
+	 * @return value aktueller Zustandswert
 	 */
 	public int getValue() {
 		return this.value;
 	}
 	
 	/**
-	 * setter fuer die farbe eines Steins
-	 * @param color neue farbe der Steine
+	 * Setter fuer die Farbe eines Steins
+	 * @param color neue Farbe des Steins
 	 */
 	public void setColor (Color color) {
 		this.color = color;
@@ -101,24 +99,24 @@ public class Stone {
 	
 	
 	/**
-	 * getter fuer die Farbe eines Steins
-	 * @return color Farbwert eines Steins
+	 * Getter fuer die Farbe des Steins
+	 * @return color Farbwert des Steins
 	 */
 	public Color getColor() {
 		return this.color;
 	}
 	
 	/**
-	 * setter fuer die Position eines Steins
-	 * @param pos position der Steine
+	 * Setter fuer die Position des Steins
+	 * @param pos neue Position des Steins
 	 */
 	public void setPos (Position pos) {
 		this.pos = pos;
 	}
 	
 	/**
-	 * getter fuer die Position eines Steins
-	 * @return pos
+	 * Getter fuer die Position des Steins
+	 * @return pos aktuelle Position des Steins
 	 */
 	public Position getPos() {
 		return this.pos;
@@ -126,13 +124,13 @@ public class Stone {
 	
 	
 	/**
-	 * setter fuer den Typ (Haltbarkeit) eines Steins
-	 * @param type typ der steine
+	 * Setter fuer den Typ (Haltbarkeit) des Steins
+	 * @param type neuer Typ des Steins
 	 */
 	public void setType(int type) {
 		this.type = type;
 		switch (type) {
-		// initialisiert die farbe der steine und den Wert abhaengig von seinem Typ
+		// initialisiert die farbe des steine und den Zustand, abhaengig von seinem Typ
 		case (0):
 			color = new Color(0, 0, 0);
 			value = 0;
@@ -158,8 +156,8 @@ public class Stone {
 	
 	
 	/**
-	 * getter fuer den Typ (Haltbarkeit) eines Steins
-	 * @return typ
+	 * Getter fuer den Typ (Haltbarkeit) eines Steins
+	 * @return typ aktueller Typ des Steins
 	 */
 	public int getType() {
 		return this.type;
