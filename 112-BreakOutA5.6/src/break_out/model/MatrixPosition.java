@@ -2,32 +2,28 @@ package break_out.model;
 
 
 /**
- * Diese Klasse enthaelt Informationen zu Zeile und Spalte der Steine in einer Matrix
- * 
- * 
- * 
- * @author Gruppe 112 : Saman Shayanfar, Bashar Alsamar
+ * Diese Klasse enthaelt Informationen zur Position eines Steins in der Spielfeld-Matrix
+ *
+ * @author
  *
  */
 
 public class MatrixPosition {
 	
 	/**
-	 * Instanzvariable line 
-	 * Sie beinhaltet die zeile der Steine in einer matrix
+	 * Zeilenposition des Steins
 	 */
 	private int line;
 	
 	/**
-	 * Instanzvariable column
-	 * Sie beinhaltet die spalten der Steine in einer matrix
+	 * Spaltenposition des Steins
 	 */
 	private int column;
 	
 	/**
-	 * Konstruktor mit zeile und spalte der steine
-	 * @param line zeile 
-	 * @param column spalte 
+	 * Konstruktor 
+	 * @param line zeile, in der der Stein stehen soll 
+	 * @param column spalte, in der der Stein stehen soll 
 	 */
 	public MatrixPosition(int line, int column) {
 		this.line = line;
@@ -35,7 +31,7 @@ public class MatrixPosition {
 	}
 	
 	/**
-	 * getter fuer die zeile
+	 * Getter fuer die zeile
 	 * @return line 
 	 */
 	public int getLine() {
@@ -43,12 +39,10 @@ public class MatrixPosition {
 	}
 	
 	/**
-	 * getter fuer die spalte
+	 * Getter fuer die Spalte
 	 * @return column
 	 */
 	public int getColumn() {
 		return column;
 	}
-	
-
 }
