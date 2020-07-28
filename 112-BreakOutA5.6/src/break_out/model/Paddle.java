@@ -3,73 +3,63 @@ package break_out.model;
 import break_out.Constants;
 
 /**
- * Diese Klasse enthaelt Informationen zu Eigenschaften und verhalten des Paddles
+ * Diese Klasse enthaelt Daten zu Eigenschaften und verhalten des Paddels
  * 
- * 
- * 
- * @author Gruppe 112 : Saman Shayanfar, Bashar Alsamar
+ * @author
  *
  */
 
 public class Paddle {
 	
 	/**
-	 * Objektvariable position vom Datentyp Position
-	 * Paddle position auf dem spielfeld
+	 * Paddel-Position auf dem spielfeld
 	 */
 	private Position position;
 	
 	/**
-	 * Objektvariable direction
-	 * Sie beinhaltet die Bewegungsrichtung des Paddle
+	 * Aktuelle Bewegungsrichtung des Paddels
 	 */
 	private int direction;
 	
-	
-	
 	/**
-	 * Konstruktor des Paddles
-	 * Die Position des Paddles wird hier initialisiert.
+	 * Konstruktor. Initialisiert die Position des Paddels
 	 */
 	public Paddle() {
-		// Paddleobjekt wird die Position mittig am unteren Spielrand zugewiesen
+		// Paddle-Objekt bekommt die Position in der Mitte 
+		// unten am Spielfeldrand zugewiesen
 		this.position = new Position(Constants.SCREEN_WIDTH / 2 - Constants.PADDLE_WIDTH / 2, 
 				Constants.SCREEN_HEIGHT - Constants.PADDLE_HEIGHT);
 	}
 	
 	
 	/**
-	 * Der getter fuer die Paddel position
-	 * @return position Die aktuelle position des Paddles
+	 * Getter fuer die Paddel-Position
+	 * @return position Die aktuelle Position des Paddels
 	 */
 	public Position getPosition() {
 		return position;
-	}
-	
-	
+	}	
 	
 	/**
-	 * getter fuer die Bewegung des Paddles
-	 * @return direction Die Bewegungsrichtung des Paddles
+	 * Getter fuer die Bewegung des Paddels
+	 * @return direction Die Bewegungsrichtung des Paddels
 	 */
 	public int getDirection() {
 		return direction;
 	}
 	
 	/**
-	 * setter fuer die Bewegung des Paddles
-	 * @param direction Die neue Bewegungsrichtung des Paddles
+	 * Setter fuer die Bewegung des Paddels
+	 * @param direction Die neue Bewegungsrichtung des Paddels
 	 */
 	public void setDirection(int direction) {
 		this.direction = direction;
 	}
 	
-	
-	
 	/**
-	 * Methode um die neue Position des Paddles zu setzten
-	 * unter Nutzung der alten Position und der Bewegungsrichtung
-	 * (Nur x-Koordinate, da sich das Paddle nur am unteren Spielrand bewegt)
+	 * Methode um die neue Position des Paddels zu bestimmen
+	 * mit Hilfe der vorherigen Position und der Bewegungsrichtung
+	 * (Nur X-Koordinate, da sich das Paddel nur am unteren Spielrand bewegt)
 	 */
 	public void updatePosition() {
 		// Bewegung nach rechts
@@ -83,13 +73,13 @@ public class Paddle {
 		
 		// rechte Wandberuehrung pruefen
 		if (position.getX() >= Constants.SCREEN_WIDTH - Constants.PADDLE_WIDTH) {
-			// Setzte auf Randberuehrung
+			// Setze auf Maximalposition rechts
   	  		position.setX(Constants.SCREEN_WIDTH - Constants.PADDLE_WIDTH);  	  		
   	  	}
 		
 		// linke Wandberuehrung pruefen
   	  	if (position.getX() <= 0) {
-  	  		// Setze auf Randberuehrung
+  	  		// Setze auf Maximalposition links
   	  		position.setX(0);  	  		
   	  	}
 	}
