@@ -4,85 +4,80 @@ import break_out.Constants;
 import break_out.controller.JSONReader;
 
 /**
- * This class contains information about the running game
- * 
- * @author dmlux
- * @author I. Schumacher
- * modified by Saman Shayanfar, Bashar Alsamar
+ * Diese Klasse enthält Daten über das laufende Spiel
+ *  
+ * @author
  */
 public class Level extends Thread {
 
     /**
-     * The game to which the level belongs 
+     * Das Spiel, zu dem dieser Level gehört
      */
     private Game game;
 	 
     /**
-   	 * The number of the level
+   	 * Welches Level läuft gerade?
    	 */
     private int levelnr;
        
     /**
-	 * The score of the level
+	 * Der Spielstand des aktuellen Levels
 	 */
     private int score;
     
     /**
-     * The ball of the level
+     * Der Ball im aktuellen Level
      */
     private Ball ball;
     
     /**
-     * Instantsvariable paddle mit dem Datentyp Paddle
-     * Der Paddle des Levels
+     * Das Paddel, das mit diesem Level verknüpft ist
      */
     private Paddle paddle;
     
     /**
-     * Instanzvariable stones vom Datentyp Stone (Nutzen eines Arrays)
+     * Die Spielsteine des aktuellen Levels
      */
     private Stone[][] stones;
     
     /**
-     * Instantsvariable lifeCnt
+     * Anzahl der "Leben", die der Spieler noch hat
      */
     private int lifeCnt;
     
-    
-    
-    
     /**
-     * Instanzvariable finished vom Datentyp boolean
+     * Instanzvariable 'finished' vom Datentyp boolean
      * zum Ueberpruefen, ob das Spiel abgebrochen wurde
      */
     private boolean finished = false;
     
     /**
-     * Flag that shows if the ball was started
+     * 
+     * Schalter, der anzeigt, ob der Ball sich gerade bewegt
      */
     private boolean ballWasStarted = false;
    
     /**
-     * The constructor creates a new level object and needs the current game object, 
-     * the number of the level to be created and the current score
-     * @param game The game object
-     * @param levelnr The number of the new level object
-     * @param score The score
+     * Konstruktor. Er erzeugt ein neues Level-Objekt.
+     * 
+     * @param game das Game-Objekt des aktuellen Spiels
+     * @param levelnr die Level-Nummer des zu erzeugenden Levels
+     * @param score der aktuelle Spielstand
      */
     public Level(Game game, int levelnr, int score) {
     	this.game = game;
     	this.levelnr = levelnr;
     	this.score = score;
         this.ball = new Ball();
-        // Paddle objekt erzeugen, das mittig an der Unterkante ausgerichtet ist
+        // Paddle-Objekt erzeugen, das mittig an der Unterkante ausgerichtet ist
         this.paddle = new Paddle();
         
         loadLevelData(levelnr);
     }
 
     /**
-     * The getter for the ball object
-     * @return ball The ball of the level      
+     *  Getter für das Ball-Objekt
+     * @return ball der Ball des aktuellen Levels      
      * 
      */
     public Ball getBall() {
@@ -90,30 +85,31 @@ public class Level extends Thread {
     }
     
     /**
-     * getter aufrufen, damit Zugriff auf Paddleobjekt moeglich ist
-     * @return paddle Mit der Information der Position des Paddles
+     * Getter für das aktuelle Paddle-Objekt
+     * @return paddle das aktuelle Paddle-Objekt
      */
     public Paddle getPaddle() {
     	return this.paddle;
     }
     
     /**
-     * Sets ballWasStarted to true, the ball is moving
+     * setzt den Ball in Bewegung
      */
     public void startBall() {
         ballWasStarted = true;
     }
 
     /**
-     * Sets ballWasStarted to false, the ball is stopped
+     * hält den Ball an Ort und Stelle fest
      */
     public void stopBall() {
         ballWasStarted = false;
     }
     
     /**
-     * Returns if the ball is moving or stopped
-     * @return ballWasStarted True: the ball is moving; false: the ball is stopped
+     * gibt an, ob der Ball gerade in Bewegung ist (true) oder nicht (false)
+     * 
+     * @return ballWasStarted True: Ball ist in Bewegung; false: Ball wurde angehalten
      */
     public boolean ballWasStarted() {
         return ballWasStarted;
@@ -121,15 +117,15 @@ public class Level extends Thread {
     
     /**
      * setter um das Spiel zu beenden
-     * @param finished Uebergabe, beenden des Spiels
+     * @param finished Uebergabewert: beendet oder nicht?
      */
     public void setFinished(boolean finished) {
     	this.finished = finished;
     }
     
     /**
-     * getter fuer den Steinematrix
-     * @return stones
+     * getter fuer die Steinematrix
+     * @return die Steinematrix
      */
 	public Stone[][] getStones(){
 		
@@ -137,8 +133,8 @@ public class Level extends Thread {
 	}
 	
 	/**
-	 * getter fuer den score
-	 * @return score aktueller punktestand
+	 * getter fuer den aktuellen Spielstand
+	 * @return score aktueller Spielstand
 	 */
 	public int getScore() {
 		return this.score;
@@ -146,8 +142,8 @@ public class Level extends Thread {
 	}
 	
 	/**
-	 * getter fuer den lifecounter
-	 * @return lifeCnt aktueller leben
+	 * getter fuer die Anzahl der noch vorhandenen Leben
+	 * @return lifeCnt die noch vorhandenen Leben
 	 */
 	public int getLifeCnt() {
 		
@@ -156,50 +152,50 @@ public class Level extends Thread {
 	
 
     /**
-     * The method of the level thread
+     * Methode, die den Level-Thread steuert
      */
     public void run() {	
     	game.notifyObservers();
     		
-    	// endless loop 
+    	// endlosschlefe
     	while (!finished && !allStonesBroken() ) {
-    		// if ballWasStarted is true, the ball is moving
+    		// wenn der Ball in Bewegung ist ...
 	        if (ballWasStarted) {
 	                
-	            // Call here the balls method for reacting on the borders of the playground
+	            // Den Ball auf Berührung der "Wände" reagieren lassen
 	        	ball.reactOnBorder();
 	           
 	            		            	
-	            // Call here the balls method for updating his position on the playground
+	            // die akuelle Position (immer wieder) neu bestimmen
 	        	ball.updatePosition();
 	        	
 	                               
-	            // Tells the observer to repaint the components on the playground
+	            // den Observer (von neuem) anweisen, auf Ereignisse zu reagieren 
 	            game.notifyObservers();    
 	            
-	            // Reaktion des Balls nach der Beruehrung mit dem Paddle
+	            // Ball-Reaktion nach Beruehrung mit dem Paddel
 	            ball.reflectOnPaddle(paddle);
 	            
-	            // neue Paddleposition nach Betaetigen von Pfeiltasten
-	            // Paddle auf Wandberuehrung pruefen
+	            // neue Paddleposition (nach Betaetigen von Pfeiltasten)
 	            paddle.updatePosition();
 	            
 	            // wenn ein Stein vom Ball getroffen wurde
 	            if (ball.hitsStone(stones)) {
 	            	
-	            	// erneuern der Eigenschaften vom Stein und aktualisieren des Punktestandes
+	            	// Zustand des Steins auf neuesten Stand bringen
+	            	// Spielstand auf neuesten Stand bringen
 	            	updateStonesAndScore();
 	            }
 	            
 	            // wenn der Ball verloren geht
 	            if (ball.ballLost()) {
 	            	
-	            	// veringert leben
+	            	// -> ein Leben weniger
 	            	decreaseLives();
 	            }
 	                
 	        }
-	        // The thread pauses for a short time 
+	        // Der Thread versucht, 4 millisekunden anzuhalten 
 	        try {
 	            Thread.sleep(4);
 	        } catch (InterruptedException e) {
@@ -209,21 +205,22 @@ public class Level extends Thread {
     }
     
     /**
-    * Loads the information for the level from a json-file located in the folder /res of the project
-    * @param levelnr The number X for the LevelX.json file
+     * Lädt die Daten den aktuellen Level aus einer JSON-Datei im /res/ Ordner des Projekts
+    * 
+    * @param levelnr die Nummer des Levels, der geladen werden soll.
     */
     private void loadLevelData(int levelnr) {
     	
     	// Laden der JSON-Datei mit dem entsprechenden Level
     	JSONReader reader = new JSONReader("res/Level" + levelnr + ".json");
     	
-        // // befuellen der 2D-Stein-Array mit den Werten aus der JSON-Datei
+        // // befuellen des 2D-Stone-Arrays mit den Werten aus der JSON-Datei
     	int[][] stoneTypes = reader.getStones2DArray();
     	
     	// Setzten der Anzahl an zur Verfuegung stehender Leben aus der JSON-Datei
     	lifeCnt = reader.getLifeCounter();
     	
-    	// Erzeugen ein neues Objekt der Klasse Stein
+    	// Erzeugen ein neues Objekt der Klasse Stone
     	// mit der Matrixgroesse aus der JSON-Datei
     	stones = new Stone [Constants.SQUARES_Y][Constants.SQUARES_X];
     	
@@ -261,8 +258,9 @@ public class Level extends Thread {
     }
     
     /**
-     * prueft ob auf dem Spielfeld noch Steine vorhanden sind
-     * @return true wenn spielfeld leer
+     * prueft ob auf dem Spielfeld noch Steine vorhanden sind (true) oder nicht (false)
+     * 
+     * @return Steine vorhanden (true) oder nicht (false)
      */
     private boolean allStonesBroken() {
     	// Zeile der Steinmatrix
@@ -280,11 +278,9 @@ public class Level extends Thread {
     	return true;
     }
     
-    
-    
     /**
-     * Methode die den leben verringert wenn der ball verloren geht
-     * und am ende wenn keine leben mehr vorhanden ist zum Startscreen geht
+     * Methode ein Leben abzieht, wenn der ball verloren geht
+     * und zum Startscreen geht, wenn der Lebensstand bei 0 steht.
      */
     private void decreaseLives() {
     	
@@ -305,12 +301,5 @@ public class Level extends Thread {
     		finished = true;
     		game.getController().toStartScreen();
     	}
-    }
-    
-    
-    
+    }    
 }
-    
-
-
-	
