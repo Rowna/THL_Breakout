@@ -7,55 +7,55 @@ import break_out.controller.Controller;
 import break_out.view.View;
 
 /**
- * This class contains information about the game (the model in MVC)
+ * Diese Model-Klasse enthält alle Daten über das Game-Objekt.
  * 
- * @author dmlux, modified by I. Schumacher
+ * @author 
  * 
  */
 public class Game {
 
 	/**
-	 * A list of observer objects
+	 * Eine Observer-Liste
 	 */
 	private List<View> observers = new ArrayList<View>();
 
 	/**
-	 * The controller of the game
+	 * Der Controller für dieses Spiel
 	 */
 	private Controller controller;
 
 	/**
-	 * The current level
+	 * Der aktuelle Spiel-Level
 	 */
 	private Level level;
 
 	/**
-	 * The first levelnumber
+	 * Die Nummer des ersten Levels
 	 */
 	private int firstLevel = 1;
 
 	/**
-	 * The last levelnumber
+	 * Die Nummer des letzten Levels
 	 */
 	private int maxLevel = 1;
 
 	/**
-	 * The total score of the game
+	 * Der aktuelle Spielstand
 	 */
 	private int score = 0;
 
 	/**
-	 * The constructor creates a new game instance with the given Controller
+	 * Konstruktor
 	 * 
 	 * @param controller
-	 *            The controller to manage this instance (MVC-patter)
+	 *            Controller-Instanz, um das Spiel zu steuern (MVC-pattern)
 	 */
 	public Game(Controller controller) {
 		this.controller = controller;
 		createLevel(firstLevel, 0);
 	}
 
-	// The three methods of the mvc pattern ----------------
+	// Die drei Methoden des MVC-Patterns ----------------
 	public void addObserver(View observer) {
 		observers.add(observer);
 	}
@@ -71,53 +71,59 @@ public class Game {
 	// -------------------------------------------------------
 
 	/**
-	 * Getter for the Controller
+	 * Getter für den Controller
 	 * 
-	 * @return controller The controller of this game
+	 * @return controller Der Controller für dieses Spiel
 	 */
 	public Controller getController() {
 		return controller;
 	}
 
 	/**
-	 * Getter for the current Level
+	 * Getter für den aktuellen Spiel-Level
 	 * 
-	 * @return level The current level of the game
+	 * @return level der aktuelle Spiel-Level
 	 */
 	public Level getLevel() {
 		return level;
 	}
 
 	/**
-	 * Getter for the total score
+	 * Getter für den aktuellen Spielstand
 	 * 
-	 * @return score The current score of the game
+	 * @return score der aktuelle Spielstand
 	 */
 	public int getScore() {
 		return score;
 	}
 
 	/**
-	 * Creates the first or the next level, if the level number is less or equal
-	 * maxLevel. If the current level is higher than maxLevel the view will be
-	 * switched to the startScreen.
+	 * Erzeugt den ersten Level (bei Spielbeginn) oder den "nächsten" Spiel-Level,
+	 * solange die Level-Nummer kleiner oder gleich der höchstmöglichen Nummer
+	 * für Spiel-Level ist.
+	 * Wenn der aktuelle Level höher ist, wird automatisch der Startscreen aufgerufen.
+	 * 
+	 * (persönliche Idee: Statt Startscreen an dieser Stelle ein Celebration-Screen mit einem 
+	 * schönen Bildchen, das einen Pokal zeigt (wie im bild gefunden). Ist nur eine Idee.
+	 * dazu ein Button "Start", der wieder auf den Startscreen führt.) 
 	 * 
 	 * @param levelnr
-	 *            The number for the next level
+	 *            Die Nummer für den nächsten Level
 	 * @param score
-	 *            The current players score after finishing the previous level.
+	 *            Der Spielstand bei Erreichen des aktuellen Levels
 	 */
 	public void createLevel(int levelnr, int score) {
 		this.score = score;
 		if (levelnr <= maxLevel) {
-			// Creates a new level instance
+			// erzeugt ein neues Level-Objekt
 			level = new Level(this, levelnr, score);
-			// calls the run method to start the new level
+			// lässt den neuen Level beginnen
 			level.start();
-			// tells the controller to switch to the field view which displays the playground
+			// fordert den Controller auf, auf den Field-View zu wechseln;
+			// => zeigt das Spielfeld wieder an.
 			controller.toPlayground();
 		} else {
-			// tells the controller to switch to the startScreen of the game
+			// fordert den Conntoller auf, den Start-Bildschirm wieder aufzubauen
 			controller.toStartScreen();
 
 		}
